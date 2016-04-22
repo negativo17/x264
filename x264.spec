@@ -1,11 +1,15 @@
-%global commit0 5c6570495f8f1c716b294aee1430d8766a4beb9c
+%global commit0 fd2c324731c2199e502ded9eff723d29c6eafe0b
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global api_version 148
+
+# Can be rebuilt without CLI by passing "--without=cli" or by globally setting
+# this:
+# %%global _without_cli 1
 
 
 Name:           x264
 Version:        0.%{api_version}
-Release:        3.%{?shortcommit0}%{?dist}
+Release:        4.%{?shortcommit0}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
@@ -14,9 +18,13 @@ URL:            http://www.videolan.org/developers/x264.html
 # No releases, not GitHub, no versioning except internal API version
 Source0:        %{name}-%{version}-%{shortcommit0}.tar.xz
 Source1:        %{name}-snapshot.sh
+# http://git.videolan.org/?p=x264.git;a=commitdiff;h=7650a1367003e24f4f1b831682c012b5ba3e6c69
+Patch0:         0001-configure-Disable-CLI-libraries-when-CLI-is-disabled.patch
 
+%{!?_without_cli:
 BuildRequires:  gpac-devel
 BuildRequires:  ffmpeg-devel
+}
 BuildRequires:  yasm
 
 %description
@@ -44,14 +52,16 @@ applications that use %{name}.
 
 %prep
 %setup -qn %{name}
-
+%patch0 -p1
 
 %build
 %configure \
     --enable-debug \
     --enable-pic \
     --enable-shared \
-    --bit-depth=10
+    --bit-depth=10 \
+    --system-libx264 \
+    %{?_without_cli:--disable-cli}
 sed -i -e "s/SONAME=libx264.*/SONAME=libx264_main10.so/g" config.mak
 make %{?_smp_mflags}
 
@@ -59,7 +69,9 @@ make %{?_smp_mflags}
     --enable-debug \
     --enable-pic \
     --enable-shared \
-    --bit-depth=8
+    --bit-depth=8 \
+    --system-libx264 \
+    %{?_without_cli:--disable-cli}
 make %{?_smp_mflags}
 
 %install
@@ -70,8 +82,10 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 
 %postun libs -p /sbin/ldconfig
 
+%{!?_without_cli:
 %files
 %{_bindir}/%{name}
+}
 
 %files libs
 %{!?_licensedir:%global license %%doc}
@@ -89,6 +103,10 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Fri Apr 22 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-4.fd2c324
+- Update to latest sources.
+- Allow building without CLI (--without=cli).
+
 * Sun Feb 07 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-3.5c65704
 - Enable platform-specific assembly optimizations.
 
