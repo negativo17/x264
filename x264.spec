@@ -1,4 +1,4 @@
-%global commit0 fd2c324731c2199e502ded9eff723d29c6eafe0b
+%global commit0 a5e06b9a435852f0125de4ecb198ad47340483fa
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global api_version 148
 
@@ -9,7 +9,7 @@
 
 Name:           x264
 Version:        0.%{api_version}
-Release:        4.%{?shortcommit0}%{?dist}
+Release:        5.%{?shortcommit0}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
@@ -18,8 +18,6 @@ URL:            http://www.videolan.org/developers/x264.html
 # No releases, not GitHub, no versioning except internal API version
 Source0:        %{name}-%{version}-%{shortcommit0}.tar.xz
 Source1:        %{name}-snapshot.sh
-# http://git.videolan.org/?p=x264.git;a=commitdiff;h=7650a1367003e24f4f1b831682c012b5ba3e6c69
-Patch0:         0001-configure-Disable-CLI-libraries-when-CLI-is-disabled.patch
 
 %{!?_without_cli:
 BuildRequires:  gpac-devel
@@ -52,7 +50,6 @@ applications that use %{name}.
 
 %prep
 %setup -qn %{name}
-%patch0 -p1
 
 %build
 %configure \
@@ -103,6 +100,10 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Fri Jul 01 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-5.a5e06b9
+- Update sources.
+- Remove upstreamed patch.
+
 * Fri Apr 22 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-4.fd2c324
 - Update to latest sources.
 - Allow building without CLI (--without=cli).
