@@ -9,7 +9,7 @@
 
 Name:           x264
 Version:        0.%{api_version}
-Release:        6.%{?shortcommit0}%{?dist}
+Release:        7.%{?shortcommit0}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
@@ -101,6 +101,9 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Fri Jul 22 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-7.a5e06b9
+- Rebuild for ffmpeg 3.1.1.
+
 * Fri Jul 01 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-6.a5e06b9
 - Use dynamic gpac library.
 
