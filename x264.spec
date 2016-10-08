@@ -1,6 +1,7 @@
-%global commit0 a5e06b9a435852f0125de4ecb198ad47340483fa
-%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global commit0 86b71982e131eaa70125f8d0e725fcade9c4c677
+%global date 20160920
 %global api_version 148
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
 # Can be rebuilt without CLI by passing "--without=cli" or by globally setting
 # this:
@@ -9,7 +10,7 @@
 
 Name:           x264
 Version:        0.%{api_version}
-Release:        7.%{?shortcommit0}%{?dist}
+Release:        8%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
@@ -101,6 +102,11 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Sat Oct 08 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-8.20160920git86b7198
+- Update to latest snapshot.
+- Update snapshot script.
+- Use packaging guidelines for snapshot format.
+
 * Fri Jul 22 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-7.a5e06b9
 - Rebuild for ffmpeg 3.1.1.
 
