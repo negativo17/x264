@@ -1,5 +1,5 @@
-%global commit0 86b71982e131eaa70125f8d0e725fcade9c4c677
-%global date 20160920
+%global commit0 97eaef2ab82a46d13ea5e00270712d6475fbe42b
+%global date 20170121
 %global api_version 148
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
@@ -10,7 +10,7 @@
 
 Name:           x264
 Version:        0.%{api_version}
-Release:        9%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:        10%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
@@ -102,6 +102,9 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Sun Feb 12 2017 Simone Caronni <negativo17@gmail.com> - 1:0.148-10.20170121git97eaef2
+- Update to latest stable snapshot.
+
 * Wed Nov 09 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-9.20160920git86b7198
 - Rebuild for FFmpeg update.
 
