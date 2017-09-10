@@ -24,7 +24,8 @@ Source1:        %{name}-snapshot.sh
 BuildRequires:  gpac-devel
 BuildRequires:  ffmpeg-devel
 }
-BuildRequires:  nasm >= 2.13
+BuildRequires:  yasm >= 1.2.0
+#BuildRequires:  nasm >= 2.13
 
 %description
 %{name} is a free software library and application for encoding video streams into
