@@ -1,6 +1,6 @@
-%global commit0 aaa9aa83a111ed6f1db253d5afa91c5fc844583f
-%global date 20170521
-%global api_version 148
+%global commit0 e9a5903edf8ca59ef20e6f4894c196f135af735e
+%global date 20171224
+%global api_version 152
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
 # Can be rebuilt without CLI by passing "--without=cli" or by globally setting
@@ -10,7 +10,7 @@
 
 Name:           x264
 Version:        0.%{api_version}
-Release:        12%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:        13%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
@@ -24,8 +24,7 @@ Source1:        %{name}-snapshot.sh
 BuildRequires:  gpac-devel
 BuildRequires:  ffmpeg-devel
 }
-BuildRequires:  yasm >= 1.2.0
-#BuildRequires:  nasm >= 2.13
+BuildRequires:  nasm >= 2.13
 
 %description
 %{name} is a free software library and application for encoding video streams into
@@ -103,6 +102,9 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Sat Jan 06 2018 Simone Caronni <negativo17@gmail.com> - 1:0.152-13.20171224gite9a5903
+- Update to latest stable snapshot.
+
 * Sun Sep 10 2017 Simone Caronni <negativo17@gmail.com> - 1:0.148-12.20170521gitaaa9aa8
 - Update to latest stable snapshot.
 
