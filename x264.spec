@@ -1,16 +1,15 @@
-%global commit0 e9a5903edf8ca59ef20e6f4894c196f135af735e
-%global date 20171224
-%global api_version 152
+%global commit0 0a84d986e7020f8344f00752e3600b9769cc1e85
+%global date 20180806
+%global api_version 155
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
 # Can be rebuilt without CLI by passing "--without=cli" or by globally setting
 # this:
 # %%global _without_cli 1
 
-
 Name:           x264
 Version:        0.%{api_version}
-Release:        14%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:        15%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
@@ -19,6 +18,8 @@ URL:            http://www.videolan.org/developers/x264.html
 # No releases, not GitHub, no versioning except internal API version
 Source0:        %{name}-%{version}-%{shortcommit0}.tar.xz
 Source1:        %{name}-snapshot.sh
+
+Patch0:         http://git.videolan.org/?p=x264/x264-sandbox.git;a=patch;h=b63c73dc5c37e5405bf032c9113c1daced3e45a4#/%{name}-fix-linking.patch
 
 %{!?_without_cli:
 BuildRequires:  gpac-devel
@@ -50,7 +51,7 @@ applications that use %{name}.
 
 
 %prep
-%setup -qn %{name}
+%autosetup -p1 -n %{name}
 sed -i -e 's/gpac_static/gpac/g' configure
 
 %build
@@ -87,7 +88,6 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 }
 
 %files libs
-%{!?_licensedir:%global license %%doc}
 %license COPYING
 %doc AUTHORS
 %{_libdir}/lib%{name}.so.*
@@ -102,6 +102,9 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Aug 22 2018 Simone Caronni <negativo17@gmail.com> - 1:0.155-15.20180806git0a84d98
+- Update to latest stable snapshot.
+
 * Thu Apr 26 2018 Simone Caronni <negativo17@gmail.com> - 1:0.152-14.20171224gite9a5903
 - Rebuild for FFMpeg update.
 

@@ -9,7 +9,7 @@ API=$(grep '#define X264_BUILD' x264.h | awk '{print $3}')
 COMMIT=$(git rev-list HEAD -n1)
 SHORTCOMMIT=$(echo ${COMMIT:0:7})
 DATE=$(git log -1 --format=%cd --date=short | tr -d \-)
-rm -fr .git
+rm -fr .git*
 
 cd ..
 
