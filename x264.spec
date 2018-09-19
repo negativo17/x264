@@ -21,6 +21,7 @@ Source1:        %{name}-snapshot.sh
 
 Patch0:         http://git.videolan.org/?p=x264/x264-sandbox.git;a=patch;h=b63c73dc5c37e5405bf032c9113c1daced3e45a4#/%{name}-fix-linking.patch
 
+BuildRequires:  gcc
 %{!?_without_cli:
 BuildRequires:  gpac-devel
 BuildRequires:  ffmpeg-devel
