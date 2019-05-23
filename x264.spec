@@ -1,15 +1,13 @@
-%global commit0 0a84d986e7020f8344f00752e3600b9769cc1e85
-%global date 20180806
-%global api_version 155
+%global commit0 72db437770fd1ce3961f624dd57a8e75ff65ae0b
+%global date 20190303
+%global api_version 157
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
-# Can be rebuilt without CLI by passing "--without=cli" or by globally setting
-# this:
-# %%global _without_cli 1
+%bcond_with bootstrap
 
 Name:           x264
 Version:        0.%{api_version}
-Release:        17%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:        18%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
@@ -19,13 +17,11 @@ URL:            http://www.videolan.org/developers/x264.html
 Source0:        %{name}-%{version}-%{shortcommit0}.tar.xz
 Source1:        %{name}-snapshot.sh
 
-Patch0:         http://git.videolan.org/?p=x264/x264-sandbox.git;a=patch;h=b63c73dc5c37e5405bf032c9113c1daced3e45a4#/%{name}-fix-linking.patch
-
 BuildRequires:  gcc
-%{!?_without_cli:
+%if %{without bootstrap}
 BuildRequires:  gpac-devel
 BuildRequires:  ffmpeg-devel
-}
+%endif
 BuildRequires:  nasm >= 2.13
 
 %description
@@ -61,8 +57,7 @@ sed -i -e 's/gpac_static/gpac/g' configure
     --enable-pic \
     --enable-shared \
     --bit-depth=10 \
-    --system-libx264 \
-    %{?_without_cli:--disable-cli}
+    --system-libx264
 sed -i -e "s/SONAME=libx264.*/SONAME=libx264_main10.so/g" config.mak
 make %{?_smp_mflags}
 
@@ -71,22 +66,17 @@ make %{?_smp_mflags}
     --enable-pic \
     --enable-shared \
     --bit-depth=8 \
-    --system-libx264 \
-    %{?_without_cli:--disable-cli}
+    --system-libx264
 make %{?_smp_mflags}
 
 %install
 %make_install
 install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 
-%post libs -p /sbin/ldconfig
+%ldconfig_scriptlets libs
 
-%postun libs -p /sbin/ldconfig
-
-%{!?_without_cli:
 %files
 %{_bindir}/%{name}
-}
 
 %files libs
 %license COPYING
@@ -103,6 +93,10 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Thu May 23 2019 Simone Caronni <negativo17@gmail.com> - 1:0.157-18.20190303git72db437
+- Update to latest stable snapshot.
+- Update SPEC file, use bootstrap packaging guidelines.
+
 * Tue Feb 26 2019 Simone Caronni <negativo17@gmail.com> - 1:0.155-17.20180806git0a84d98
 - Rebuild for updated libraries.
 
