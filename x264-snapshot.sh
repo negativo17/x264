@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-git clone git://git.videolan.org/x264.git -b stable x264
+git clone https://code.videolan.org/videolan/x264.git -b stable x264
 
 cd x264
 
