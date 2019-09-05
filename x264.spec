@@ -19,7 +19,6 @@ Source1:        %{name}-snapshot.sh
 
 BuildRequires:  gcc
 %if %{without bootstrap}
-BuildRequires:  gpac-devel
 BuildRequires:  ffmpeg-devel
 %endif
 BuildRequires:  nasm >= 2.13
@@ -49,7 +48,6 @@ applications that use %{name}.
 
 %prep
 %autosetup -p1 -n %{name}
-sed -i -e 's/gpac_static/gpac/g' configure
 
 %build
 %configure \
@@ -95,6 +93,8 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 %changelog
 * Wed Sep 04 2019 Simone Caronni <negativo17@gmail.com> - 1:0.157-19.20190717git34c06d1
 - Update to latest stable snapshot.
+- Disable GPAC.
+- Trim changelog.
 
 * Thu May 23 2019 Simone Caronni <negativo17@gmail.com> - 1:0.157-18.20190303git72db437
 - Update to latest stable snapshot.
@@ -123,36 +123,3 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 
 * Sun Feb 12 2017 Simone Caronni <negativo17@gmail.com> - 1:0.148-10.20170121git97eaef2
 - Update to latest stable snapshot.
-
-* Wed Nov 09 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-9.20160920git86b7198
-- Rebuild for FFmpeg update.
-
-* Sat Oct 08 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-8.20160920git86b7198
-- Update to latest snapshot.
-- Update snapshot script.
-- Use packaging guidelines for snapshot format.
-
-* Fri Jul 22 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-7.a5e06b9
-- Rebuild for ffmpeg 3.1.1.
-
-* Fri Jul 01 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-6.a5e06b9
-- Use dynamic gpac library.
-
-* Fri Jul 01 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-5.a5e06b9
-- Update sources.
-- Remove upstreamed patch.
-
-* Fri Apr 22 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-4.fd2c324
-- Update to latest sources.
-- Allow building without CLI (--without=cli).
-
-* Sun Feb 07 2016 Simone Caronni <negativo17@gmail.com> - 1:0.148-3.5c65704
-- Enable platform-specific assembly optimizations.
-
-* Thu Feb 04 2016 Simone Caronni <negativo17@gmail.com> - 0.148-2.5c65704
-- Update to latest stable snapshot.
-- Use a different name for the 10 bit library for consistency with x265.
-- Bump Epoch.
-
-* Mon Nov 23 2015 Simone Caronni <negativo17@gmail.com> - 0.148-1.7599210
-- First build from master branch.
