@@ -1,13 +1,13 @@
-%global commit0 34c06d1c17ad968fbdda153cb772f77ee31b3095
-%global date 20190717
-%global api_version 157
+%global commit0 1771b556ee45207f8711744ccbd5d42a3949b14c
+%global date 20191127
+%global api_version 159
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
 %bcond_with bootstrap
 
 Name:           x264
 Version:        0.%{api_version}
-Release:        19%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:        20%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
@@ -91,6 +91,9 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Fri Jan 17 2020 Simone Caronni <negativo17@gmail.com> - 1:0.159-20.20191127git1771b55
+- Update to latest stable snapshot.
+
 * Wed Sep 04 2019 Simone Caronni <negativo17@gmail.com> - 1:0.157-19.20190717git34c06d1
 - Update to latest stable snapshot.
 - Disable GPAC.
