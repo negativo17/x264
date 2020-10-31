@@ -11,7 +11,7 @@ Release:        24%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
-URL:            http://www.videolan.org/developers/x264.html
+URL:            https://www.videolan.org/developers/x264.html
 
 # No releases, not GitHub, no versioning except internal API version
 Source0:        %{name}-%{version}-%{shortcommit0}.tar.xz
