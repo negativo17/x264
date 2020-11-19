@@ -22,6 +22,7 @@ BuildRequires:  gcc
 BuildRequires:  ffmpeg-devel
 %endif
 BuildRequires:  nasm >= 2.13
+BuildRequires:  pkgconfig(bash-completion)
 
 %description
 %{name} is a free software library and application for encoding video streams into
@@ -75,6 +76,7 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 
 %files
 %{_bindir}/%{name}
+%{_datadir}/bash-completion/completions/%{name}
 
 %files libs
 %license COPYING
