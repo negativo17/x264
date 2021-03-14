@@ -57,7 +57,7 @@ applications that use %{name}.
     --bit-depth=10 \
     --system-libx264
 sed -i -e "s/SONAME=libx264.*/SONAME=libx264_main10.so/g" config.mak
-make %{?_smp_mflags}
+%make_build
 
 %configure \
     --enable-debug \
@@ -65,7 +65,7 @@ make %{?_smp_mflags}
     --enable-shared \
     --bit-depth=8 \
     --system-libx264
-make %{?_smp_mflags}
+%make_build
 
 %install
 %make_install
