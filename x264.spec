@@ -11,7 +11,7 @@ Release:        24%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
-URL:            http://www.videolan.org/developers/x264.html
+URL:            https://www.videolan.org/developers/x264.html
 
 # No releases, not GitHub, no versioning except internal API version
 Source0:        %{name}-%{version}-%{shortcommit0}.tar.xz
@@ -22,6 +22,7 @@ BuildRequires:  gcc
 BuildRequires:  ffmpeg-devel
 %endif
 BuildRequires:  nasm >= 2.13
+BuildRequires:  pkgconfig(bash-completion)
 
 %description
 %{name} is a free software library and application for encoding video streams into
@@ -57,7 +58,7 @@ applications that use %{name}.
     --bit-depth=10 \
     --system-libx264
 sed -i -e "s/SONAME=libx264.*/SONAME=libx264_main10.so/g" config.mak
-make %{?_smp_mflags}
+%make_build
 
 %configure \
     --enable-debug \
@@ -65,7 +66,7 @@ make %{?_smp_mflags}
     --enable-shared \
     --bit-depth=8 \
     --system-libx264
-make %{?_smp_mflags}
+%make_build
 
 %install
 %make_install
@@ -75,6 +76,7 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 
 %files
 %{_bindir}/%{name}
+%{_datadir}/bash-completion/completions/%{name}
 
 %files libs
 %license COPYING
