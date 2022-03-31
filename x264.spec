@@ -1,13 +1,13 @@
-%global commit0 5db6aa6cab1b146e07b60cc1736a01f21da01154
-%global date 20210613
-%global api_version 163
+%global commit0 bfc87b7a330f75f5c9a21e56081e4b20344f139e
+%global date 20220222
+%global api_version 164
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
 %bcond_with bootstrap
 
 Name:           x264
 Version:        0.%{api_version}
-Release:        25%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:        26%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
@@ -18,10 +18,15 @@ Source0:        %{name}-%{version}-%{shortcommit0}.tar.xz
 Source1:        %{name}-snapshot.sh
 
 BuildRequires:  gcc
-%if %{without bootstrap}
-BuildRequires:  ffmpeg-devel
-%endif
 BuildRequires:  nasm >= 2.13
+%if %{without bootstrap}
+BuildRequires:  pkgconfig(libavcodec)
+BuildRequires:  pkgconfig(libavformat)
+BuildRequires:  pkgconfig(libavutil)
+BuildRequires:  pkgconfig(libswscale)
+%endif
+
+Requires:       bash-completion
 
 %description
 %{name} is a free software library and application for encoding video streams into
@@ -51,30 +56,36 @@ applications that use %{name}.
 
 %build
 %configure \
+    --enable-bashcompletion \
     --enable-debug \
     --enable-pic \
     --enable-shared \
     --bit-depth=10 \
     --system-libx264
 sed -i -e "s/SONAME=libx264.*/SONAME=libx264_main10.so/g" config.mak
-make %{?_smp_mflags}
+
+%make_build
 
 %configure \
+    --enable-bashcompletion \
     --enable-debug \
     --enable-pic \
     --enable-shared \
     --bit-depth=8 \
     --system-libx264
-make %{?_smp_mflags}
+
+%make_build
 
 %install
 %make_install
 install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
+install -p -m 644 -D tools/bash-autocomplete.sh %{buildroot}%{_sysconfdir}/bash_completion.d/x264
 
 %ldconfig_scriptlets libs
 
 %files
 %{_bindir}/%{name}
+%{_sysconfdir}/bash_completion.d/%{name}
 
 %files libs
 %license COPYING
@@ -91,6 +102,11 @@ install -p -m 755 libx264_main10.so %{buildroot}%{_libdir}/
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Thu Mar 31 2022 Simone Caronni <negativo17@gmail.com> - 1:0.164-26.20220222gitbfc87b7
+- Update to latest snapshot.
+- Enable bash completion for cli.
+- Fix dependencies for split ffmpeg package.
+
 * Sat Jul 24 2021 Simone Caronni <negativo17@gmail.com> - 1:0.163-25.20210613git5db6aa6
 - Update to latest stable snapshot.
 

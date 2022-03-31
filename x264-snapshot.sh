@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-git clone https://code.videolan.org/videolan/x264.git -b stable x264
+git clone https://code.videolan.org/videolan/x264.git x264
 
 cd x264
 
@@ -22,4 +22,4 @@ sed -i \
     -e "s|%global api_version.*|%global api_version ${API}|g" \
     x264.spec
 
-rpmdev-bumpspec -c "Update to latest stable snapshot." x264.spec
+rpmdev-bumpspec -c "Update to latest snapshot." x264.spec
