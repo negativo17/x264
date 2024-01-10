@@ -1,5 +1,5 @@
-%global commit0 a8b68ebfaa68621b5ac8907610d3335971839d52
-%global date 20230402
+%global commit0 c1c9931dc87289b8aeba78150467f17bdb97d019
+%global date 20231123
 %global api_version 164
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
@@ -7,7 +7,7 @@
 
 Name:           x264
 Version:        0.%{api_version}
-Release:        30%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:        31%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
@@ -102,6 +102,9 @@ install -p -m 644 -D tools/bash-autocomplete.sh %{buildroot}%{_sysconfdir}/bash_
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Jan 10 2024 Simone Caronni <negativo17@gmail.com> - 1:0.164-31.20231123gitc1c9931
+- Update to latest snapshot.
+
 * Fri Sep 29 2023 Simone Caronni <negativo17@gmail.com> - 1:0.164-30.20230402gita8b68eb
 - Update to latest snapshot.
 
