@@ -56,6 +56,7 @@ applications that use %{name}.
 
 %build
 %configure \
+    --bashcompletionsdir=%{_datadir}/bash-completion/completions/ \
     --enable-bashcompletion \
     --enable-debug \
     --enable-pic \
@@ -67,13 +68,12 @@ applications that use %{name}.
 
 %install
 %make_install
-install -p -m 644 -D tools/bash-autocomplete.sh %{buildroot}%{_sysconfdir}/bash_completion.d/x264
 
 %ldconfig_scriptlets libs
 
 %files
 %{_bindir}/%{name}
-%{_sysconfdir}/bash_completion.d/%{name}
+%{_datadir}/bash-completion/completions/%{name}
 
 %files libs
 %license COPYING
@@ -92,6 +92,7 @@ install -p -m 644 -D tools/bash-autocomplete.sh %{buildroot}%{_sysconfdir}/bash_
 - Update to latest snapshot.
 - Switch to unified build with multiple bit depths.
 - Trim changelog.
+- Move bash completion file to /usr/share/bash-completion/completions.
 
 * Wed Mar 20 2024 Simone Caronni <negativo17@gmail.com> - 1:0.164-32.20240314git585e019
 - Update to latest snapshot.
