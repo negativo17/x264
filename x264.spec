@@ -7,11 +7,11 @@
 
 Name:           x264
 Version:        0.%{api_version}
-Release:        33%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:        34%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
-URL:            http://www.videolan.org/developers/x264.html
+URL:            https://www.videolan.org/developers/x264.html
 
 # No releases, not GitHub, no versioning except internal API version
 Source0:        %{name}-%{version}-%{shortcommit0}.tar.xz
@@ -19,6 +19,7 @@ Source1:        %{name}-snapshot.sh
 
 BuildRequires:  gcc
 BuildRequires:  nasm >= 2.13
+BuildRequires:  pkgconfig(bash-completion)
 %if %{without bootstrap}
 BuildRequires:  pkgconfig(libavcodec)
 BuildRequires:  pkgconfig(libavformat)
@@ -56,7 +57,6 @@ applications that use %{name}.
 
 %build
 %configure \
-    --bashcompletionsdir=%{_datadir}/bash-completion/completions/ \
     --enable-bashcompletion \
     --enable-debug \
     --enable-pic \
@@ -88,6 +88,9 @@ applications that use %{name}.
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Thu May 23 2024 Simone Caronni <negativo17@gmail.com> - 1:0.164-34.20240513git4613ac3
+- Adjust bash-completion installation and URL (#1).
+
 * Wed May 22 2024 Simone Caronni <negativo17@gmail.com> - 1:0.164-33.20240513git4613ac3
 - Update to latest snapshot.
 - Switch to unified build with multiple bit depths.
