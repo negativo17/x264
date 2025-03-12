@@ -1,5 +1,5 @@
-%global commit0 da14df5535fd46776fb1c9da3130973295c87aca
-%global date 20241027
+%global commit0 27d8370847d79665de06bbf8f043ce9a3a4a3da1
+%global date 20250311
 %global api_version 164
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
@@ -7,7 +7,7 @@
 
 Name:           x264
 Version:        0.%{api_version}
-Release:        36%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:        37%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
@@ -88,6 +88,9 @@ applications that use %{name}.
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Mar 12 2025 Simone Caronni <negativo17@gmail.com> - 1:0.164-37.20250311git27d8370
+- Update to latest snapshot.
+
 * Tue Oct 29 2024 Simone Caronni <negativo17@gmail.com> - 1:0.164-36.20241027gitda14df5
 - Update to latest snapshot.
 
