@@ -56,6 +56,10 @@ applications that use %{name}.
 %autosetup -p1 -n %{name}
 
 %build
+%ifarch %{ix86}
+export LDFLAGS+=' -Wl,-z,notext'
+%endif
+
 %configure \
     --enable-bashcompletion \
     --enable-debug \
