@@ -7,7 +7,7 @@
 
 Name:           x264
 Version:        0.%{api_version}
-Release:        37%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:        38%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Epoch:          1
 Summary:        H264/AVC video streams encoder
 License:        GPLv2+
@@ -88,6 +88,9 @@ applications that use %{name}.
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Oct 07 2026 Simone Caronni <negativo17@gmail.com> - 1:0.164-38.20250311git27d8370
+- Rebuild for updated dependencies.
+
 * Wed Mar 12 2025 Simone Caronni <negativo17@gmail.com> - 1:0.164-37.20250311git27d8370
 - Update to latest snapshot.
 
